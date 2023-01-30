@@ -252,9 +252,9 @@ public class Person {
 Person person = (new ModelMapper()).map(personEntity, Person.class);
 \end{lstlisting}
 
-At the time of writing the project has $721$ commits, $220$ open
-issues and $11$ open pull requests. The project was clone from
-GitHub and since the project uses Maven, the test suite was ran
+At the time of writing the project had $721$ commits, $220$ open
+issues and $11$ open pull requests. The project was cloned from
+GitHub and since the project uses Maven, the test suite was run
 with the command \shell{mvn clean test}, (see figure
 \ref{running-test-suite}).
 
@@ -307,9 +307,9 @@ extracted using CodeMR.
     \texttt{very--high} complexity}
 \end{figure}
 
-\note{The percentage values provided by CodeMR where not used.
+\note{The percentage values provided by CodeMR were not used.
 This is because when converting from percentages to quantities
-the values where not identical to the ones reported by CodeMR.}
+the values were not identical to the ones reported by CodeMR.}
 
 CodeMR defines code complexity in the following way.
 
@@ -329,14 +329,14 @@ the project is not complex.
 Apart from the complexity brought on by \textbf{branching} as
 mentioned in McCabe's Cyclomatic Complexity, there are other
 factors. Specifically, \textbf{indirection} caused by dependency
-injection or function calls also adds complexity as the
-programmer has to jump from one segment of code to another to
+injection or function calls also add complexity. This is because
+a programmer has to jump from one segment of code to another to
 understand.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/problematic-classes.png}
-    \caption{A list of problematic classes identified by CodeMR}
+    \caption{The list of problematic classes identified by CodeMR}
     \label{problematic-classes}
 \end{figure}
 
@@ -369,11 +369,22 @@ the use of unchecked code.
 
 This naturally makes the project for any observer highly
 complex. However, after acquainting one's self with the
-terminology used and the less complex classes in the project it
+terminology used and the less complex classes in the project, it
 will overall be easier to understand the more complicated pieces
-of code. So, from that perspective overall the project has a
-\texttt{medium} complexity given that it is solving quite a
-complicated problem. 
+of code. Additionally, looking at the User Manual on
+\url{https://modelmapper.org} will help in the understanding process.
+
+Even though this system according to Lehman's Laws is very close
+to an \texttt{S}--type system. Given the lack of
+implementation--focused specification it makes the project more
+complicated then it has to be. This is because individual
+developer choices can heavily effect the complexity of the code.
+
+So, from this perspective the project has a \textbf{medium}
+complexity given that it is solving quite a complicated problem.
+However, it might pose resitance to new contributors due to this
+complexity. This can be easily remedied with more friendly and
+implementation--focused specification.
 
 \subsubsection{Coupling}
 
@@ -438,14 +449,21 @@ Clearly, these classes seem to be doing most of the heavy
 lifting, in fact most of the complexity is also present in these
 classes. So as consequence high coupling is expected. This is
 clear in the dependency visualisation in figure
-\ref{internal-package-coupling}.
+\ref{internal-package-coupling}. Also, the type of coupling
+present between classes is \emph{Common Coupling}. This is
+because the classes have instances of each other present as
+class fields and they share a lot of data and configuration.
+
+\note{This coupling is not happening at a package level but at a
+class level. This makes it a less severe form of coupling.
+However, it still hinders understandability.}
 
 As a suggestion, to reduce coupling (and even complexity) a more
 structured approach to dependency management should be taken. If
-necessary even having code duplication to allow for decoupling
+necessary, even having code duplication to allow for decoupling
 would be better as it isolates all the dependencies required by
-a specific class. Essentially, the dependency graph should look
-like a tree. 
+a specific class. Ideally, the dependency graph should look like
+a tree.
 
 \subsubsection{Cohesion}
 
@@ -475,14 +493,14 @@ like a tree.
     test, reuse, or even understand.
 \end{definition}
 
-As can be seen in figure \ref{cohesion-diag} there no classes
-which have a very high lack of cohesion. Nevertheless, there
-some classes which have high lack of cohesion. Again looking at
+As can be seen in figure \ref{cohesion-diag} there are no classes
+which have a very high lack of cohesion. Nevertheless, there are
+some which have high lack of cohesion. Again looking at
 figure \ref{problematic-classes}, they are essentially, the same
 classes described in the prior section.
 
-But upon closer inspection of the actual classes reveals that
-these, where possible, are following a form of cohesions called
+Closer inspection of the actual classes reveals that these,
+where possible, are following a form of cohesion called
 \emph{Procedural Cohesion} or they expose their methods to their
 consumers.
 
@@ -512,7 +530,7 @@ high--level methods to test the library/application.
     \label{intellij-code-coverage-2}
 \end{figure}
 
-So overall the project has enough unit tests. However, there are
+Overall the project has enough unit tests however there are
 some gaps. Going over the code the following observations can be
 made:
 
@@ -523,12 +541,12 @@ made:
     \item Some classes are not covered at all for example
         \texttt{BridgeClassLoaderFactory}, \linebreak
         \texttt{StrongTypeConditionalConverter} etc.
-    \item Some classes also seem to partially covered as a side
+    \item Some classes also seem to be partially covered as a side
         effect of some other test for example
         \texttt{CopyOnWriteLinkedHashMap}.
 \end{itemize}
 
-Now if we take into consideration the data generated by CodeMR
+Now, if we take into consideration the data generated by CodeMR
 (see figure \ref{problematic-classes}), there is a large
 concentration of tests focused on testing the packages with the
 most complex classes (see figure
@@ -577,12 +595,10 @@ around $85\%$.
 
 The development cycle does not seem to follow any predefined
 schedule. In fact in the year $2021$ there were twice as many
-releases as in the year $2022$. Also in previous years there was
-more signigificant activity.
-
-In general, in previous years releases used to contain a decent
-amount of work. In these last two years work on the project
-seems to have slowed down.
+releases as in the year $2022$. Also, in previous years there
+was more signigificant activity. In general, releases used to
+contain a decent amount of work. In these last two years work on
+the project seems to have slowed down.
 
 \subsubsection{Commit Analysis}
 
@@ -593,13 +609,13 @@ The following ten commits were analysed:
         (\texttt{00a45001a73ee65f4351b48f97bb083cc2ae0d6e})
     \item Add unit tests for optional converters
         (\texttt{4b3cc868aacbc797ee2433c77938d62d6e62692d})
-    \item Improve performance on implicit mapping (#$619$)
+    \item Improve performance on implicit mapping (\#$619$)
         \newline
         (\texttt{2f5b7ccca0e56c7d529e6626b43746e583824910})
     \item Fix logical bug in PropertyInfoRegistry
         (\texttt{9ab5eaacfaf2cd3fb0c079346a6c205317122a49})
     \item Fix configuration `collectionsMergeEnabled',
-        `deepCopyEnabled' (#$485$) \newline
+        `deepCopyEnabled' (\#$485$) \newline
         (\texttt{b77316ba99ec52b1c497280a31da19ef0c29eedf}) 
     \item Change collections merge strategy breaks mapping of
         collection from a\ldots \newline
@@ -610,7 +626,7 @@ The following ten commits were analysed:
     \item In order to use ModelMapper in jdk11 (build 11+28).
         \newline
         (\texttt{096183809417d0ff65b2f09c7995913cf877a54f})
-    \item Fixes MapValueReader get wrong field type (#$371$)
+    \item Fixes MapValueReader get wrong field type (\#$371$)
         \newline
         (\texttt{fbc99db5785bdc51b3a896dbf7442e83c7ac95c5}) 
     \item Updates asm, cglib and objenesis to their latest
@@ -625,46 +641,46 @@ The following ten commits were analysed:
     \label{pull-request}
 \end{figure}
 
-In terms of readability it depends which commit one considers.
+In terms of readability, it depends which commit one considers.
 This is because some commits are inherintely very simple. For
-example the \nth{10} commit is a perfective commit, just bumping
+example the \nth{10} commit is a perfective commit; just bumping
 the versions of the described dependencies in the
-\texttt{pom.xml} file. Also there are commits coming from pull
+\texttt{pom.xml} file. Also, there are commits coming from pull
 requests which are corrective in nature that are also very well
 explained by the author (see figure \ref{pull-request}).
 
 However, there are commits from the core maintainers of the
 repository which are not very well explained. This is a symptom
 of having extensive knowledge of the project. To core
-maintainers many parts of the project might seem simple whilst
-however, to new maintainers they might not be so simple. Of
-course some initial investment to acclimated to the project is
-still required.
+maintainers many parts of the project might seem simple whereas,
+to new maintainers they might not be so simple. Of course some
+initial investment to acclimate to the project is still
+required.
 
 Open--source projects suffer the same cost of onboarding new
-developer as For--profit companies, but to a greater since there
-is often no monetary motivater.
+developer as For--profit companies, but to a greater extent
+since there is often no monetary motivater.
 
 In previous yreas ($2018$--$2020$) the project was much more
-active. There was significant activity on GitHub and each
+active. There was significant activity on GitHub and in each
 development cycle it was more common for the core maintainers to
-merge pull requests submitted by contributors. Additionally, the
-core maintainers would also help contributors by reviewing code
-and providing suggestions to improve code (see the \nth{10}
+merge pull--requests submitted by contributors. Additionally,
+the core maintainers would also help contributors by reviewing
+code and providing suggestions to improve code (see the \nth{10}
 commit).
 
 Pull requests and issues were significantly used and were a
 good measure of the amount of work being done. Additionally, the
 core maintainers also adopted a system of calling certain test
 classes \verb|GH{issue-number}|, where \texttt{GH} stands for
-GitHub, to directly link the class to an GitHub issue or bug
+GitHub to directly link the class to a GitHub issue or bug
 where most of the discussion and exposition for the bug would be
 stored.
 
-Additionally GitHub provides features for more explicit planning
+Additionally, GitHub provides features for more explicit planning
 and development of certain features however, it is very likely
 that the core maintainers believe that the library itself is
-feature complete and does not need additionaly changes, except
+feature complete and does not need additional changes, except
 for maintenance and new features added by contributors.
 
 \subsubsection{Analysing Commit
@@ -684,7 +700,7 @@ conflict''. This commit falls under the category of perfective
 maintenance. This is because the core maintainer is adding an
 additional error message (see figure \ref{error-message}) meant
 to aid users and help users understand how \modelmapper is
-suppose to work.
+supposed to work.
 
 The core maintainer decided to add this commit after a number of
 users commented on
@@ -692,13 +708,13 @@ users commented on
 issue 633} and
 \href{https://github.com/modelmapper/modelmapper/issues/654}{GitHub
 issue 654} about some expected behvaiour. The expected behaviour
-by the users was that the nested fields of internal object are
-also skipped. However, this was noted to be not the case.
+by the users was that the nested fields of internal object where
+also skipped. However, this was not the case.
 
 Additionally, the maintainer also added a test class called
-\texttt{GH654.java} in the \texttt{org.modelmapper.bugs} package
+\texttt{GH654.java} in the \linebreak \texttt{org.modelmapper.bugs} package
 to make sure that the behaviour is properly documented.
 
-\note{At the time of writing both issue 633 and 654 are open.}
+\note{At the time of writing both issue 633 and 654 were open.}
 
 \end{document}
